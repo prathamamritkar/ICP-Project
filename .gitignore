@@ -155,3 +155,6 @@ TODO.md
 # System files
 *.tmp
 *.temp
+
+git remote add origin https://github.com/prathamamritkar/ICP-Project.git
+git push -u origin feature/blockjunction
