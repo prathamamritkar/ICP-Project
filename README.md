@@ -1,218 +1,240 @@
-# Blockchain Junction 🔗
+# Blockchain Junction
 
-A **Cross-Chain Asset Swap Platform** built on the Internet Computer that enables users to securely exchange assets across different blockchain networks including ICP, Bitcoin, and Ethereum.
+A cross-chain asset swap platform built on the Internet Computer Protocol (ICP) that enables seamless asset transfers between different blockchain networks.
 
-## 🌟 Features
+## Overview
 
-- **Cross-Chain Swaps**: Exchange assets between ICP, Bitcoin, and Ethereum
-- **Internet Identity Authentication**: Secure login using IC's native identity system
-- **Real-time Balance Management**: Deposit, withdraw, and track your assets
-- **Peer-to-Peer Matching**: Find and execute swaps with other users
-- **Transaction History**: Complete audit trail of all your activities
-- **Modern UI**: Responsive React frontend with beautiful gradients and animations
+Blockchain Junction is a decentralized application (dApp) that facilitates cross-chain asset swaps through a sophisticated backend canister written in Rust and a modern React frontend. The platform supports multiple blockchain networks including Internet Computer, Bitcoin, and Ethereum, providing users with a unified interface for managing cross-chain assets.
 
-## 🏗️ Architecture
+## Key Features
 
-### Backend (Rust Canister)
-- **Authentication**: Internet Identity integration with user verification
-- **Asset Management**: Multi-chain balance tracking and updates
-- **Swap Engine**: Create, match, and execute cross-chain swaps
-- **Storage**: Persistent data storage using IC stable structures
+- **Cross-Chain Asset Swaps**: Seamlessly swap assets between different blockchain networks
+- **Multi-Chain Support**: Currently supports ICP, Bitcoin, and Ethereum networks
+- **Secure Authentication**: Internet Identity integration for secure user authentication
+- **Real-time Balance Management**: Track asset balances across multiple chains
+- **Modern UI/UX**: Beautiful, responsive interface with glass morphism design
+- **Decentralized Architecture**: Fully decentralized backend running on ICP canisters
 
-### Frontend (React)
-- **Context-based State Management**: AuthContext and BackendContext
-- **Component Architecture**: Modular design with wallet, swap, and transaction components
-- **Responsive Design**: Mobile-friendly interface with SCSS styling
-- **Real-time Updates**: Live balance and swap status updates
+## Project Structure
 
-## 🚀 Quick Start
+This project consists of two main components:
+
+1. **Backend Canister** (`src/blockchain_junction_backend/`): Rust-based smart contract handling cross-chain logic
+2. **Frontend Application** (`src/blockchain_junction_frontend/`): React-based web interface
+
+## Recent Updates
+
+- **UI/UX Overhaul**: Complete redesign with modern glass morphism effects and animations
+- **JSX Syntax Fixes**: Resolved all React compilation errors and mismatched tags
+- **Enhanced Styling**: Added comprehensive CSS utilities and responsive design
+- **Component Architecture**: Modular component structure with reusable glass cards
+- **Animation System**: Integrated Framer Motion for smooth animations and transitions
+
+## Getting Started Guide
 
 ### Prerequisites
-- [DFX](https://internetcomputer.org/docs/current/developer-docs/setup/install) >= 0.15.0
-- [Node.js](https://nodejs.org/) >= 16.0.0
-- [Rust](https://rustup.rs/) (for backend development)
 
-### Installation
+Before you begin, ensure you have the following installed:
+- **Node.js** (v16 or higher)
+- **npm** or **yarn**
+- **DFX** (DFINITY Canister SDK) - [Installation Guide](https://internetcomputer.org/docs/current/developer-docs/setup/install/)
+- **Git**
 
-1. **Clone the repository:**
+### Step 1: Install Dependencies
+
+First, install dependencies in both the project root and frontend directory:
+
 ```bash
-git clone <repository-url>
-cd block-junction
-```
-
-2. **Install dependencies:**
-```bash
+# Install dependencies in project root
 npm install
+
+# Navigate to frontend directory and install dependencies
+cd src/blockchain_junction_frontend/
+npm install
+
+# Return to project root
+cd ../..
 ```
 
-3. **Start the local IC replica:**
+**Purpose**: This installs all necessary packages for both the backend canister development and the React frontend application.
+
+### Step 2: Start Internet Computer Local Network
+
+#### For Regular Development (Background Mode)
 ```bash
 dfx start --background
 ```
+**Purpose**: Starts the local Internet Computer replica in the background, allowing you to continue using the terminal while the network runs.
 
-4. **Deploy the canisters:**
+#### For Fresh Start (Clean State)
+```bash
+dfx start --clean
+```
+**Purpose**: Starts the local network with a clean state, removing all previous canister data and deployments. Use this when you want to reset everything.
+
+### Step 3: Identity Management
+
+#### Check Available Identities
+```bash
+dfx identity list
+```
+**Purpose**: Lists all available DFX identities on your system. Identities are used to manage different developer accounts and permissions.
+
+#### Create New Identity (Optional)
+```bash
+dfx identity new <identity-name>
+```
+**Purpose**: Creates a new identity for development. Replace `<identity-name>` with your desired name (e.g., `my-dev-identity`).
+
+#### Check Current Identity
+```bash
+dfx identity whoami
+```
+**Purpose**: Shows which identity is currently active. This identity will be used for deployments and canister calls.
+
+#### Switch Identity (Optional)
+```bash
+dfx identity use <your-identity-name>
+# or use default
+dfx identity use default
+```
+**Purpose**: Switches to a specific identity. Use "default" for the default identity or specify your custom identity name.
+
+### Step 4: Local Deployment
+
+#### Deploy to Local Network
 ```bash
 dfx deploy
 ```
+**Purpose**: Compiles and deploys both the backend canister (Rust) and frontend canister to your local Internet Computer network. This makes your application accessible locally.
 
-5. **Start the development server:**
+#### Access Your Application
+After successful deployment, you'll see output similar to:
+```
+URLs:
+  Frontend canister via browser
+    blockchain_junction_frontend: http://127.0.0.1:4943/?canisterId=<canister-id>
+  Backend canister via Candid interface
+    blockchain_junction_backend: http://127.0.0.1:4943/_/candid?id=<canister-id>
+```
+
+### Step 5: Mainnet Deployment (Production)
+
+**Warning**: Mainnet deployment costs cycles (ICP tokens). Ensure you have sufficient cycles before proceeding.
+
+#### Prepare for Mainnet
 ```bash
-npm start
+# Check available identities
+dfx identity list
+
+# Create production identity (recommended)
+dfx identity new production
+
+# Check current identity
+dfx identity whoami
+
+# Switch to production identity
+dfx identity use production
 ```
 
-The application will be available at `http://localhost:8080`
-
-## 🎯 Usage
-
-### 1. Authentication
-- Click "Login with Internet Identity" to authenticate
-- Your principal ID will be displayed in the header
-
-### 2. Manage Assets
-- **Deposit**: Add assets to your platform balance
-- **Withdraw**: Send assets to external addresses
-- **View Balances**: Check your holdings across all supported chains
-
-### 3. Create Swaps
-- Navigate to the "Create Swap" tab
-- Specify the asset you want to trade and the desired asset
-- Set swap duration and submit the request
-
-### 4. Execute Swaps
-- Browse "Pending Swaps" to find matching opportunities
-- Execute compatible swaps with other users
-- Monitor transaction status in real-time
-
-## 📁 Project Structure
-
-```
-block-junction/
-├── src/
-│   ├── blockchain_junction_backend/src/     # Rust Backend
-│   │   ├── lib.rs                          # Main canister entry point
-│   │   ├── types.rs                        # Type definitions
-│   │   ├── storage.rs                      # Data persistence
-│   │   ├── auth.rs                         # Authentication logic
-│   │   ├── swap.rs                         # Swap operations
-│   │   └── utils.rs                        # Utility functions
-│   │
-│   └── blockchain_junction_frontend/src/   # React Frontend
-│       ├── components/                     # UI Components
-│       │   ├── Header/                     # Navigation header
-│       │   ├── Dashboard/                  # Main dashboard
-│       │   ├── WalletConnection/           # Asset management
-│       │   ├── SwapSection/                # Swap interface
-│       │   └── TransactionHistory/         # Transaction logs
-│       ├── contexts/                       # React contexts
-│       │   ├── AuthContext.jsx             # Authentication state
-│       │   └── BackendContext.jsx          # Backend integration
-│       └── App.jsx                         # Main application
-└── README.md
-```
-
-## 🔧 Development
-
-### Backend Development
+#### Get Cycles for Deployment
 ```bash
-# Build backend canister
-dfx build blockchain_junction_backend
-
-# Deploy only backend
-dfx deploy blockchain_junction_backend
-
-# Check canister logs
-dfx canister logs blockchain_junction_backend
+# Redeem faucet coupon (if you have one)
+dfx cycles redeem-faucet-coupon <coupon-code> --ic
 ```
+**Purpose**: Redeems a cycles faucet coupon to get free cycles for deployment. Replace `<coupon-code>` with your actual coupon code.
 
-### Frontend Development
+#### Check Cycles Balance
 ```bash
-# Generate type declarations
-dfx generate
+dfx cycles balance --ic
+```
+**Purpose**: Displays your current cycles balance on the mainnet. You need cycles to deploy and run canisters on the Internet Computer.
 
-# Start development server
+#### Deploy to Mainnet
+```bash
+dfx deploy --ic
+```
+**Purpose**: Deploys your application to the Internet Computer mainnet. This makes your application publicly accessible on the decentralized web.
+
+### Step 6: Development Workflow
+
+#### Start Frontend Development Server
+```bash
+cd src/blockchain_junction_frontend/
 npm run dev
+```
+**Purpose**: Starts the Vite development server for hot-reloading during frontend development.
 
-# Build for production
+#### Build Frontend for Production
+```bash
+cd src/blockchain_junction_frontend/
 npm run build
 ```
+**Purpose**: Creates an optimized production build of the frontend application.
 
-### Testing
+### Common Commands Reference
+
+| Command | Purpose |
+|---------|---------|
+| `dfx start --background` | Start local IC network in background |
+| `dfx start --clean` | Start with clean state |
+| `dfx stop` | Stop local IC network |
+| `dfx deploy` | Deploy to local network |
+| `dfx deploy --ic` | Deploy to mainnet |
+| `dfx canister status --all` | Check status of all canisters |
+| `dfx cycles balance` | Check cycles balance (local) |
+| `dfx cycles balance --ic` | Check cycles balance (mainnet) |
+
+### Troubleshooting
+
+#### Common Issues:
+
+1. **"dfx command not found"**
+   - Install DFX: `sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"`
+
+2. **"Port already in use"**
+   - Stop existing DFX: `dfx stop`
+   - Then restart: `dfx start --background`
+
+3. **"Insufficient cycles"**
+   - Get cycles from faucet or purchase ICP tokens
+   - Convert ICP to cycles: `dfx cycles convert <amount>`
+
+4. **Frontend not loading**
+   - Ensure both backend and frontend are deployed
+   - Check canister URLs in deployment output
+   - Verify local network is running
+
+### Next Steps
+
+After successful deployment:
+1. Test the cross-chain swap functionality
+2. Explore the Candid interface for backend testing
+3. Customize the frontend for your specific needs
+4. Add additional blockchain integrations
+5. Implement comprehensive testing
+
+For more detailed information, refer to the [Internet Computer Documentation](https://internetcomputer.org/docs/).
+
+## Running the Project
+
+To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+
+## Learn More
+
+To learn more before you start working with `blockchain_junction`, see the following documentation available online:
+
+- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
+- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
+- [Rust Canister Development Guide](https://internetcomputer.org/docs/current/developer-docs/backend/rust/)
+- [ic-cdk](https://docs.rs/ic-cdk)
+- [ic-cdk-macros](https://docs.rs/ic-cdk-macros)
+- [Candid Introduction](https://internetcomputer.org/docs/current/developer-docs/backend/candid/)
+
+If you want to start working on your project right away, you might want to try the following commands:
+
 ```bash
-# Run backend tests
-cargo test
-
-# Frontend testing (when tests are added)
-npm test
+cd blockchain_junction/
+dfx help
+dfx canister --help
 ```
-
-## 🌐 Supported Assets
-
-| Asset | Symbol | Chain | Status |
-|-------|--------|-------|--------|
-| Internet Computer | ICP | ICP | ✅ Active |
-| Bitcoin | BTC | Bitcoin | ✅ Active |
-| Ethereum | ETH | Ethereum | ✅ Active |
-
-## 🔐 Security Features
-
-- **Internet Identity Integration**: Secure, passwordless authentication
-- **Principal-based Authorization**: User actions tied to cryptographic identity
-- **Balance Verification**: Insufficient balance checks before operations
-- **Deadline Management**: Time-limited swap requests
-- **Atomic Swaps**: All-or-nothing transaction execution
-
-## 🚧 Roadmap
-
-- [ ] Real Bitcoin and Ethereum integration
-- [ ] Advanced swap matching algorithms
-- [ ] Transaction fee optimization
-- [ ] Mobile application
-- [ ] Additional blockchain support
-- [ ] Liquidity pools
-- [ ] Advanced analytics dashboard
-
-## 📖 API Documentation
-
-### Backend Methods
-
-#### Authentication
-- `login()` → `String` - Authenticate user with Internet Identity
-- `get_caller_principal()` → `Principal` - Get current user's principal
-
-#### Asset Management
-- `deposit_asset(symbol: String, amount: u64)` → `String`
-- `withdraw_asset(symbol: String, amount: u64, chain: Chain, address: String)` → `String`
-- `get_balance(symbol: String)` → `u64`
-- `get_all_balances()` → `BalanceResponse`
-
-#### Swap Operations
-- `create_swap_request(from_symbol: String, amount: u64, to_symbol: String, to_chain: Chain, duration: u64)` → `SwapResponse`
-- `execute_swap(swap_id1: u64, swap_id2: u64)` → `SwapResponse`
-- `get_pending_swaps()` → `Vec<SwapRequest>`
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🔗 Links
-
-- [Internet Computer Documentation](https://internetcomputer.org/docs)
-- [DFX SDK](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Rust CDK](https://docs.rs/ic-cdk)
-- [Internet Identity](https://identity.ic0.app/)
-
-## 📧 Support
-
-For questions and support, please open an issue in the repository or reach out to the development team.
-
----
-
-**Built with ❤️ on the Internet Computer**
